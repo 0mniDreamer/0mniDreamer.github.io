@@ -350,6 +350,37 @@ h1 .beam-text{
 .card{opacity:0;transform:translateY(14px)}
 .card.in{opacity:1;transform:translateY(0);transition:opacity .5s,transform .5s}
 @media(prefers-reduced-motion:reduce){.card{opacity:1;transform:none}}
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+.about-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:start}
+.about-bio p{color:var(--muted);font-size:1.04rem;margin-bottom:16px;max-width:54ch}
+.about-bio p strong{color:var(--text);font-weight:600}
+.rig{
+  background:linear-gradient(180deg,var(--panel-2),var(--panel));
+  border:1px solid var(--line);border-radius:16px;padding:26px 24px;
+}
+.rig h3{
+  font-family:var(--font-display);font-weight:600;font-size:1.02rem;
+  letter-spacing:0.02em;margin-bottom:16px;display:flex;align-items:center;gap:9px;
+}
+.rig h3::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--beam);box-shadow:0 0 10px var(--magenta)}
+.rig-row{
+  display:flex;justify-content:space-between;gap:16px;
+  padding:11px 0;border-top:1px solid var(--line);font-size:0.9rem;
+}
+.rig-row:first-of-type{border-top:0}
+.rig-row .k{font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--dim)}
+.rig-row .v{color:var(--text);text-align:right}
+.profile{display:flex;align-items:center;gap:18px;margin-bottom:26px}
+.avatar{position:relative;width:96px;height:96px;flex-shrink:0;border-radius:50%;background:var(--beam);padding:3px;box-shadow:0 0 24px rgba(255,46,154,0.28)}
+.avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover;position:relative;z-index:2;display:block;background:var(--panel-2)}
+.avatar-fallback{position:absolute;inset:3px;border-radius:50%;background:var(--panel-2);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:1.9rem;color:var(--text);z-index:1}
+.profile-name{display:flex;flex-direction:column;gap:4px}
+.profile-name .handle{font-family:var(--font-display);font-weight:700;font-size:1.5rem;letter-spacing:0.01em}
+.profile-name .handle-sub{font-family:var(--font-mono);font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--cyan)}
+@media(max-width:720px){.about-grid{grid-template-columns:1fr;gap:28px}.avatar{width:78px;height:78px}.avatar-fallback{font-size:1.5rem}}
 </style>
 </head>
 <body>
@@ -362,6 +393,7 @@ h1 .beam-text{
     <a class="brand" href="#top"><span class="dot"></span>OmniDreamer_<span style="color:var(--dim);font-weight:400">/mods</span></a>
     <div class="nav-links">
       <a href="#drops">Drops</a>
+      <a href="#about">About</a>
       <a href="" id="nav-github">GitHub</a>
       <a href="" id="nav-twitch">Twitch</a>
     </div>
@@ -401,6 +433,43 @@ h1 .beam-text{
     <div class="grid" id="grid"></div>
   </div>
 </main>
+
+<!-- ============================================================
+     ABOUT
+     ============================================================ -->
+<section class="section" id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Who's building this</span>
+      <h2>About me</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-bio">
+        <div class="profile">
+          <div class="avatar">
+            <img src="avatar.png" alt="OmniDreamer" onerror="this.style.display='none'" />
+            <span class="avatar-fallback">OD</span>
+          </div>
+          <div class="profile-name">
+            <span class="handle">OmniDreamer_</span>
+            <span class="handle-sub">VR modder · Streamer</span>
+          </div>
+        </div>
+        <p>I'm <strong>OmniDreamer</strong> — a VR modder and streamer who pretty much lives in <strong>Synth Riders</strong>, with side trips into Audica. Most of what I make is about smoothing out the rough edges: killing frame stutter on custom stages, overhauling the lighting, and wiring <strong>Twitch straight into the game</strong> so chat can mess with your run.</p>
+        <p>Everything here gets built, tested, and usually broken a few times live on stream before it ships. When it is released - grab whatever you like.</p>
+        <p>Come hang out.</p>
+      </div>
+      <aside class="rig">
+        <h3>The rig</h3>
+        <div class="rig-row"><span class="k">GPU</span><span class="v">RTX 5080</span></div>
+        <div class="rig-row"><span class="k">Headset</span><span class="v">PSVR2 or Multiple others</span></div>
+        <div class="rig-row"><span class="k">Modding</span><span class="v">MelonLoader · C#</span></div>
+        <div class="rig-row"><span class="k">Engine</span><span class="v">Unity, Unreal</span></div>
+        <div class="rig-row"><span class="k">Streaming</span><span class="v">OBS · Streamer.bot . Speaker.bot</span></div>
+      </aside>
+    </div>
+  </div>
+</section>
 
 <!-- ============================================================
      FOOTER
