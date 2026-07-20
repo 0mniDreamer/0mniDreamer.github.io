@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Install MelonLoader</title>
+<meta name="description" content="A beginner-friendly, step-by-step guide to installing MelonLoader for modding Unity games.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0a0c10;
+    --surface: #12151c;
+    --surface-2: #171b24;
+    --border: #232833;
+    --text: #e4e7eb;
+    --text-muted: #8b93a1;
+    --cyan: #4cf1d0;
+    --magenta: #ff4fa3;
+    --amber: #ffb454;
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before{
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle at 1px 1px, rgba(76,241,208,0.045) 1px, transparent 0);
+    background-size: 28px 28px;
+    z-index: 0;
+  }
+
+  .wrap{
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 64px 24px 120px;
+  }
+
+  header.hero{
+    margin-bottom: 56px;
+  }
+
+  .eyebrow{
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: var(--cyan);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .eyebrow::before{
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 10px var(--cyan);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse{
+    0%,100%{ opacity: 1; }
+    50%{ opacity: 0.35; }
+  }
+
+  h1{
+    font-family: var(--font-display);
+    font-size: clamp(32px, 5vw, 46px);
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0 0 18px;
+    letter-spacing: -0.01em;
+  }
+
+  .lede{
+    font-size: 17px;
+    color: var(--text-muted);
+    max-width: 58ch;
+  }
+
+  .lede a{ color: var(--cyan); }
+
+  .callout{
+    margin-top: 28px;
+    padding: 16px 18px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    border-radius: 4px;
+    font-size: 14.5px;
+    color: var(--text-muted);
+  }
+  .callout strong{ color: var(--amber); font-weight: 600; }
+  .callout a{ color: var(--cyan); }
+
+  h2.section-title{
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin: 64px 0 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  ul.reqs{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+  }
+  ul.reqs li{
+    display: flex;
+    gap: 12px;
+    padding: 12px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 15px;
+  }
+  ul.reqs li::before{
+    content: "○";
+    color: var(--cyan);
+    flex-shrink: 0;
+  }
+
+  .step{
+    position: relative;
+    padding: 0 0 40px 40px;
+    border-left: 1px solid var(--border);
+    margin-left: 14px;
+  }
+  .step:last-child{ border-left-color: transparent; padding-bottom: 4px; }
+
+  .step-marker{
+    position: absolute;
+    left: -14px;
+    top: 0;
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1px solid var(--cyan);
+    color: var(--cyan);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .step h3{
+    font-family: var(--font-display);
+    font-size: 21px;
+    font-weight: 600;
+    margin: 0 0 10px;
+  }
+
+  .step p{
+    margin: 0 0 12px;
+    font-size: 15.5px;
+  }
+
+  .step code, .lede code, .callout code{
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: var(--cyan);
+  }
+
+  .btn-label{
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 3px 9px;
+    border-radius: 4px;
+    background: rgba(76,241,208,0.1);
+    color: var(--cyan);
+    border: 1px solid rgba(76,241,208,0.35);
+  }
+
+  figure.shot{
+    margin: 16px 0 4px;
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    overflow: hidden;
+  }
+  figure.shot .img-slot{
+    aspect-ratio: 16/9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    padding: 20px;
+    text-align: center;
+  }
+  figure.shot .img-slot span.path{ color: var(--magenta); }
+  figure.shot img{ display:block; width: 100%; height: 100%; object-fit: cover; }
+  figure.shot figcaption{
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    font-style: italic;
+  }
+
+  table.file-table{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14.5px;
+    margin: 8px 0;
+  }
+  table.file-table th, table.file-table td{
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  table.file-table th{
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+  table.file-table td:first-child{ font-family: var(--font-mono); color: var(--cyan); }
+
+  .console{
+    background: #06070a;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: #7dfad0;
+    margin: 8px 0 24px;
+    overflow-x: auto;
+  }
+  .console .dim{ color: var(--text-muted); }
+
+  .trouble-grid{
+    display: grid;
+    gap: 12px;
+  }
+  .trouble-item{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--magenta);
+    border-radius: 4px;
+    padding: 14px 16px;
+  }
+  .trouble-item h4{
+    margin: 0 0 6px;
+    font-size: 15px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--magenta);
+  }
+  .trouble-item p{ margin: 0; font-size: 14.5px; color: var(--text-muted); }
+
+  ol.uninstall{
+    padding-left: 20px;
+    font-size: 15px;
+  }
+  ol.uninstall li{ margin-bottom: 8px; }
+
+  footer{
+    margin-top: 72px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--text-muted);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  footer a{ color: var(--cyan); text-decoration: none; }
+  footer a:hover{ text-decoration: underline; }
+
+  @media (max-width: 600px){
+    .wrap{ padding: 40px 18px 90px; }
+    .step{ padding-left: 30px; margin-left: 8px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .eyebrow::before{ animation: none; }
+    html{ scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">GUIDE / STANDARD INSTALL</div>
+    <h1>How to Install MelonLoader</h1>
+    <p class="lede">
+      <a href="https://github.com/LavaGang/MelonLoader" target="_blank" rel="noopener">MelonLoader</a>
+      is the universal mod loader for Unity games — it lets you run community-made mods and plugins
+      on top of a game without touching the original files. This is the fast path, using the official
+      automated installer.
+    </p>
+    <div class="callout">
+      <strong>Before you start:</strong> always download MelonLoader from the
+      <a href="https://github.com/LavaGang/MelonLoader.Installer/releases" target="_blank" rel="noopener">official GitHub releases page</a>.
+      Third-party "download" sites for mod loaders are a common way people end up with malware — the real thing is free and open-source.
+    </div>
+  </header>
+
+  <h2 class="section-title">What you'll need</h2>
+  <ul class="reqs">
+    <li>A Unity game installed via Steam, Epic, or standalone</li>
+    <li>Windows 7 / 8 / 10 / 11 (64-bit recommended), with admin rights</li>
+    <li><code>.NET 6.0 Desktop Runtime</code> — required for Il2Cpp games (most modern Unity titles)</li>
+    <li>The game <strong style="color:var(--text)">fully closed</strong> before you install or update MelonLoader</li>
+  </ul>
+
+  <h2 class="section-title">Installation</h2>
+
+  <div class="step">
+    <div class="step-marker">01</div>
+    <h3>Download the installer</h3>
+    <p>Head to the <a href="https://github.com/LavaGang/MelonLoader.Installer/releases" target="_blank" rel="noopener" style="color:var(--cyan)">MelonLoader.Installer releases page</a> and download the latest <code>MelonLoader.Installer.exe</code>.</p>
+    <figure class="shot">
+      <div class="img-slot">
+        <!-- Replace with: <img src="images/step1-download.png" alt="GitHub releases page for MelonLoader.Installer"> -->
+        <div>🖼 screenshot placeholder</div>
+        <div class="path">images/step1-download.png</div>
+      </div>
+      <figcaption>The GitHub releases page for MelonLoader.Installer</figcaption>
+    </figure>
+  </div>
+
+  <div class="step">
+    <div class="step-marker">02</div>
+    <h3>Run the installer and select your game</h3>
+    <p>Open the installer. On the <span class="btn-label">AUTOMATED</span> tab, click <span class="btn-label">SELECT</span> and browse to your game's shortcut or its <code>.exe</code> inside the install folder.</p>
+    <figure class="shot">
+      <div class="img-slot">
+        <div>🖼 screenshot placeholder</div>
+        <div class="path">images/step2-select-game.png</div>
+      </div>
+      <figcaption>Choosing the target game in the installer</figcaption>
+    </figure>
+  </div>
+
+  <div class="step">
+    <div class="step-marker">03</div>
+    <h3>Choose version and architecture</h3>
+    <p>Two dropdowns: <strong style="color:var(--text)">version</strong> (leave on latest unless a mod needs an older build) and <strong style="color:var(--text)">architecture</strong> x86/x64 (leave on auto-detect — it matches your game correctly almost every time).</p>
+    <figure class="shot">
+      <div class="img-slot">
+        <div>🖼 screenshot placeholder</div>
+        <div class="path">images/step3-version-arch.png</div>
+      </div>
+      <figcaption>Version and architecture selection</figcaption>
+    </figure>
+  </div>
+
+  <div class="step">
+    <div class="step-marker">04</div>
+    <h3>Install</h3>
+    <p>Click <span class="btn-label">INSTALL</span>. The installer copies <code>version.dll</code>, <code>dobby.dll</code>, and a <code>MelonLoader</code> folder into your game's install directory. Takes a few seconds.</p>
+  </div>
+
+  <div class="step">
+    <div class="step-marker">05</div>
+    <h3>Launch the game once</h3>
+    <p>Start the game normally. A second window — the MelonLoader console — should appear alongside it (alt-tab if you don't see it right away). If it shows up, MelonLoader is working.</p>
+    <div class="console">
+      <span class="dim">[MelonLoader] v0.7.0</span><br>
+      Initializing...<br>
+      <span class="dim">Loaded 0 Mods, 0 Plugins</span><br>
+      Ready.
+    </div>
+    <figure class="shot">
+      <div class="img-slot">
+        <div>🖼 screenshot placeholder</div>
+        <div class="path">images/step5-console.png</div>
+      </div>
+      <figcaption>MelonLoader console on first launch</figcaption>
+    </figure>
+    <p>This first launch also creates three folders inside your game directory:</p>
+    <table class="file-table">
+      <tr><th>Folder</th><th>What goes here</th></tr>
+      <tr><td>Mods</td><td>Mod .dll files</td></tr>
+      <tr><td>MelonLoader/Plugins</td><td>Plugin .dll files</td></tr>
+      <tr><td>UserData</td><td>Config files, save data for mods</td></tr>
+    </table>
+  </div>
+
+  <div class="step">
+    <div class="step-marker">06</div>
+    <h3>Add mods</h3>
+    <p>Drop mod files into <code>Mods</code> (or <code>Plugins</code> for plugins) and relaunch the game. No further setup needed for most mods.</p>
+  </div>
+
+  <h2 class="section-title">Troubleshooting</h2>
+  <div class="trouble-grid">
+    <div class="trouble-item">
+      <h4>Game won't launch after installing</h4>
+      <p>You likely installed the wrong architecture. Re-run the installer and try the other option (x86 vs x64).</p>
+    </div>
+    <div class="trouble-item">
+      <h4>Crash on startup</h4>
+      <p>Install or repair the <code>.NET 6.0 Desktop Runtime</code>.</p>
+    </div>
+    <div class="trouble-item">
+      <h4>Nothing showing up / mods not loading</h4>
+      <p>Check the mod .dll is in <code>Mods</code> (not <code>Plugins</code>), and that the game was fully closed during install.</p>
+    </div>
+  </div>
+
+  <h2 class="section-title">Uninstalling</h2>
+  <ol class="uninstall">
+    <li>Close the game</li>
+    <li>Delete <code>version.dll</code> and <code>dobby.dll</code> from the game's install folder</li>
+    <li>Delete the <code>MelonLoader</code> folder</li>
+    <li><em>(Optional, full clean removal)</em> also delete <code>Mods</code>, <code>Plugins</code>, and <code>UserData</code></li>
+  </ol>
+
+  <footer>
+    <span>Need Linux, Proton, or manual zip install instead? <a href="melonloader-manual-install-advanced.html">See the advanced guide →</a></span>
+  </footer>
+
+</div>
+</body>
+</html>
