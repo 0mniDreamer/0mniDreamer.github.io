@@ -301,7 +301,7 @@ ol.uninstall code{color:var(--cyan)}
   <div class="step">
     <div class="step-marker"><span>02</span></div>
     <h3>Run the installer and select your game</h3>
-    <p>Open the installer. On the <span class="btn-label">AUTOMATED</span> tab, click <span class="btn-label">SELECT</span> and browse to your game's shortcut or its <code>.exe</code> inside the install folder.</p>
+    <p>Open the installer. Once open, click <span class="btn-label">GAME</span> if found or if it isnt found, click <span class="btn-label">Add Game Manually</span> then browse to your game's shortcut or its <code>.exe</code> inside the game install folder.</p>
     <figure class="shot">
       <div class="img-slot">
         <div>screenshot placeholder</div>
@@ -313,21 +313,21 @@ ol.uninstall code{color:var(--cyan)}
 
   <div class="step">
     <div class="step-marker"><span>03</span></div>
-    <h3>Choose version and architecture</h3>
-    <p>Two dropdowns: <strong>version</strong> (leave on latest unless a mod needs an older build) and <strong>architecture</strong> x86/x64 (leave on auto-detect — it matches your game correctly almost every time).</p>
+    <h3>Choose a version</h3>
+    <p>When ask to select a <strong>Version</strong> (leave it on latest unless a mod needs/states to use an older version).</p>
     <figure class="shot">
       <div class="img-slot">
         <div>screenshot placeholder</div>
         <div class="path">images/step3-version-arch.png</div>
       </div>
-      <figcaption>Version and architecture selection</figcaption>
+      <figcaption> Game and Version selection</figcaption>
     </figure>
   </div>
 
   <div class="step">
     <div class="step-marker"><span>04</span></div>
     <h3>Install</h3>
-    <p>Click <span class="btn-label">INSTALL</span>. The installer copies <code>version.dll</code>, <code>dobby.dll</code>, and a <code>MelonLoader</code> folder into your game's install directory. Takes a few seconds.</p>
+    <p>Click <span class="btn-label">INSTALL</span>. The installer copies <code>version.dll</code>, <code>dobby.dll</code>, and a <code>MelonLoader</code> folder into your game's install directory. This usally takes a few seconds Once this is complete proceed to Step 5.</p>
   </div>
 
   <div class="step">
@@ -335,7 +335,7 @@ ol.uninstall code{color:var(--cyan)}
     <h3>Launch the game once</h3>
     <p>Start the game normally. A second window — the MelonLoader console — should appear alongside it (alt-tab if you don't see it right away). If it shows up, MelonLoader is working.</p>
     <div class="console">
-      <span class="dim">[MelonLoader] v0.7.0</span><br>
+      <span class="dim">[MelonLoader] v0.7.2</span><br>
       Initializing...<br>
       <span class="dim">Loaded 0 Mods, 0 Plugins</span><br>
       Ready.
@@ -347,7 +347,7 @@ ol.uninstall code{color:var(--cyan)}
       </div>
       <figcaption>MelonLoader console on first launch</figcaption>
     </figure>
-    <p>This first launch also creates three folders inside your game directory:</p>
+    <p>This first launch also creates three folders inside your game directory like the once listed below:</p>
     <table class="file-table">
       <tr><th>Folder</th><th>What goes here</th></tr>
       <tr><td>Mods</td><td>Mod .dll files</td></tr>
@@ -358,10 +358,22 @@ ol.uninstall code{color:var(--cyan)}
 
   <div class="step">
     <div class="step-marker"><span>06</span></div>
+    <h3>Download your Mods and Navigate to the Game's Root Folder</h3>
+    <p>To installed the mods you want, First download the mods from there respective sources. Once complete we need to navigate to the games root folder. If it is a Steam game you can open the game in the Libary next in the top right you will see a cog icon click this and mouse down to <code>Manage</code> in this menu click the option <code>Browse Local Files</code> this will take you to the game root folder where the <code>.exe</code> lives .</p>
+  </div>
+   
+   <div class="step">
+    <div class="step-marker"><span>07</span></div>
     <h3>Add mods</h3>
-    <p>Drop mod files into <code>Mods</code> (or <code>Plugins</code> for plugins) and relaunch the game. No further setup needed for most mods.</p>
+    <p>To install the mods you have downloaded copy them and then drop/paste the mod files into <code>Mods</code> (or <code>Plugins</code> for plugins) and relaunch the game. No further setup needed for most mods. if a mod requires further setup please follow the mods installation guide. </p>
   </div>
 
+   <div class="step">
+    <div class="step-marker"><span>08</span></div>
+    <h3>Done</h3>
+    <p> Thats it you have completed the setup and install your mods to your Unity based game. Congratulations!!! </p>
+  </div>
+   
   <h2 class="section-title">Troubleshooting</h2>
   <div class="trouble-grid">
     <div class="trouble-item">
