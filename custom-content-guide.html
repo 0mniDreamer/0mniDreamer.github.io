@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Adding Custom Content to Synth Riders — OmniDreamer</title>
+<meta name="description" content="How to add custom songs and stages to Synth Riders on PCVR and Quest." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+
+<style>
+:root{
+  --void:#0A0612;--void-2:#0D0819;--panel:#150F28;--panel-2:#1B1436;
+  --line:rgba(157,124,255,0.16);--line-strong:rgba(157,124,255,0.32);
+  --cyan:#24E3FF;--magenta:#FF2E9A;--violet:#9D5CFF;--amber:#FFC24B;
+  --text:#ECE7FA;--muted:#9E96C4;--dim:#6E668F;
+  --beam:linear-gradient(90deg,var(--cyan),var(--violet) 55%,var(--magenta));
+  --font-display:'Chakra Petch',system-ui,sans-serif;
+  --font-body:'Space Grotesk',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+  --maxw:1120px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--void);color:var(--text);font-family:var(--font-body);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);background:rgba(10,6,18,0.72);border-bottom:1px solid var(--line)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{font-family:var(--font-display);font-weight:700;letter-spacing:0.04em;font-size:1.05rem;display:flex;align-items:center;gap:10px}
+.brand .dot{width:9px;height:9px;border-radius:50%;background:var(--beam);box-shadow:0 0 12px var(--magenta)}
+.nav-links{display:flex;gap:8px;align-items:center}
+.nav-links a{font-family:var(--font-mono);font-size:0.74rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);padding:8px 12px;border-radius:8px;transition:color .2s,background .2s}
+.nav-links a:hover{color:var(--text);background:rgba(157,124,255,0.08)}
+.nav-links a.current{color:var(--cyan)}
+
+/* ARTICLE */
+.article{position:relative;max-width:820px;margin:0 auto;padding:0 24px 120px}
+.article::before{content:"";position:absolute;left:50%;top:-40px;transform:translateX(-50%);width:120%;height:320px;z-index:0;pointer-events:none;background:radial-gradient(ellipse 46% 100% at 50% 0%,rgba(36,227,255,0.14),rgba(157,92,255,0.10) 42%,transparent 72%);filter:blur(8px)}
+.article > *{position:relative;z-index:1}
+.hero{padding:72px 0 44px}
+.eyebrow{font-family:var(--font-mono);font-size:0.76rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--cyan);display:inline-flex;align-items:center;gap:10px;margin-bottom:20px}
+.eyebrow::before{content:"";width:26px;height:1px;background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+.updated{font-family:var(--font-mono);font-size:0.72rem;letter-spacing:0.06em;color:var(--dim);margin-bottom:20px}
+.updated b{color:var(--muted);font-weight:600}
+h1{font-family:var(--font-display);font-weight:700;font-size:clamp(2rem,5.5vw,3.3rem);line-height:1.04;letter-spacing:-0.01em;margin-bottom:16px}
+.lede{font-size:clamp(1rem,2vw,1.15rem);color:var(--muted);max-width:62ch}
+.lede a{color:var(--cyan)}
+.callout{margin-top:22px;padding:16px 18px;background:linear-gradient(180deg,var(--panel-2),var(--panel));border:1px solid var(--line);border-left:3px solid var(--amber);border-radius:10px;font-size:0.92rem;color:var(--muted)}
+.callout strong{color:var(--amber);font-weight:600}
+.callout a{color:var(--cyan)}
+.callout.info{border-left-color:var(--cyan)}
+.callout.info strong{color:var(--cyan)}
+
+.section-title{font-family:var(--font-mono);font-size:0.74rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--dim);margin:60px 0 22px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.section-intro{color:var(--muted);margin-bottom:8px}
+.section-intro a{color:var(--cyan)}
+
+/* option header */
+.option{display:flex;align-items:center;gap:12px;margin:34px 0 16px;font-family:var(--font-display);font-weight:600;font-size:1.18rem}
+.option .tagnum{font-family:var(--font-mono);font-size:0.66rem;letter-spacing:0.08em;text-transform:uppercase;color:#0A0612;background:var(--beam);padding:5px 10px;border-radius:7px;white-space:nowrap}
+.subhead{font-family:var(--font-display);font-weight:600;font-size:1.02rem;color:var(--cyan);margin:28px 0 12px;display:flex;align-items:center;gap:10px}
+.subhead::before{content:"";width:14px;height:2px;background:var(--cyan);border-radius:2px}
+
+/* steps */
+.step{position:relative;padding:0 0 36px 44px;border-left:1px solid var(--line);margin-left:14px}
+.step:last-child{border-left-color:transparent;padding-bottom:4px}
+.step-marker{position:absolute;left:-14px;top:0;width:28px;height:28px;border-radius:50%;background:var(--beam);padding:1.5px;box-shadow:0 0 14px rgba(255,46,154,0.35)}
+.step-marker span{display:flex;align-items:center;justify-content:center;width:100%;height:100%;border-radius:50%;background:var(--void);color:var(--cyan);font-family:var(--font-mono);font-size:11px;font-weight:600}
+.step h3{font-family:var(--font-display);font-weight:600;font-size:1.24rem;margin-bottom:10px}
+.step p{margin-bottom:12px;font-size:1rem;color:var(--text)}
+.step p:last-child{margin-bottom:0}
+
+code{font-family:var(--font-mono);font-size:0.84em;background:var(--panel-2);border:1px solid var(--line);padding:1px 6px;border-radius:5px;color:var(--cyan)}
+pre.code-block{background:var(--void-2);border:1px solid var(--line);border-radius:12px;padding:14px 16px;overflow-x:auto;margin:10px 0 18px}
+pre.code-block code{background:none;border:none;padding:0;color:#8fe9ff;font-size:0.82rem;line-height:1.6}
+.btn-label{display:inline-block;font-family:var(--font-mono);font-size:0.72rem;font-weight:600;letter-spacing:0.04em;padding:3px 9px;border-radius:6px;background:rgba(36,227,255,0.09);color:var(--cyan);border:1px solid rgba(36,227,255,0.32)}
+.ext{font-family:var(--font-mono);color:var(--magenta)}
+
+/* screenshots (real images) */
+figure.shot{margin:16px 0 4px;border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden}
+figure.shot img{display:block;width:100%;height:auto}
+figure.shot figcaption{padding:10px 14px;font-size:0.82rem;color:var(--muted);border-top:1px solid var(--line);font-style:italic}
+.shot-pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:600px){.shot-pair{grid-template-columns:1fr}}
+
+/* platform tabs */
+.tab-group{margin:10px 0 8px}
+.tabs{display:flex;gap:4px;margin:10px 0 20px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:4px}
+.tab-btn{flex:1;padding:11px 12px;border:none;background:transparent;color:var(--muted);font-family:var(--font-mono);font-size:0.74rem;font-weight:600;letter-spacing:0.03em;border-radius:8px;cursor:pointer;transition:background .15s,color .15s}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{background:var(--panel-2);color:var(--cyan);box-shadow:inset 0 0 0 1px var(--line-strong)}
+.tab-btn:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
+table.file-table{width:100%;border-collapse:collapse;font-size:0.92rem;margin:10px 0}
+table.file-table th,table.file-table td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line)}
+table.file-table th{font-family:var(--font-mono);font-size:0.68rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--dim)}
+table.file-table td:first-child{font-family:var(--font-mono);color:var(--magenta)}
+.note{font-size:0.88rem;color:var(--muted);margin-top:14px}
+.note code{color:var(--cyan)}
+
+.foot{margin-top:72px;padding-top:24px;border-top:1px solid var(--line);font-size:0.9rem;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}
+.foot a{color:var(--cyan)}
+.foot a:hover{text-decoration:underline}
+.back-home{font-family:var(--font-mono);font-size:0.72rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted)}
+.back-home:hover{color:var(--cyan)}
+
+@media(max-width:600px){.article{padding:0 18px 90px}.step{padding-left:32px;margin-left:8px}.tabs{flex-direction:column}.nav-links a{padding:8px 8px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:4px}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html"><span class="dot"></span>OmniDreamer_<span style="color:var(--dim);font-weight:400">/mods</span></a>
+    <div class="nav-links">
+      <a href="index.html#drops">Drops</a>
+      <a href="index.html#about">About</a>
+      <a href="custom-content-guide.html" class="current">Guide</a>
+      <a href="https://github.com/0mniDreamer" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.twitch.tv/omnidreamer_" target="_blank" rel="noopener">Twitch</a>
+    </div>
+  </div>
+</nav>
+
+<article class="article">
+
+  <header class="hero">
+    <span class="eyebrow">Guide · Custom content</span>
+    <h1>Adding Custom Content to Synth Riders</h1>
+    <p class="updated">Last updated <b>[ add date ]</b> · work in progress</p>
+    <p class="lede">
+      Custom songs and stages are <strong style="color:var(--text)">officially supported</strong> in Synth Riders — they're
+      drop-in files, so you don't need MelonLoader to use them. This covers adding custom songs on PC and custom stages on
+      both PC and Quest.
+    </p>
+    <div class="callout">
+      <strong>One source for everything:</strong>
+      <a href="https://synthriderz.com" target="_blank" rel="noopener">synthriderz.com</a>
+      is the community hub for custom songs, stages, playlists, and avatars.
+    </div>
+    <div class="callout info">
+      <strong>After the Unity / UI update</strong> the game folder is now <code>SynthRidersUC</code> — that's where the
+      <code>CustomSongs</code> and <code>CustomStages</code> folders live on PC.
+    </div>
+  </header>
+
+  <!-- ============================================================
+       CUSTOM SONGS (PC)
+       ============================================================ -->
+  <h2 class="section-title">Custom songs — PC</h2>
+  <p class="section-intro">There are two ways to add custom songs to the game on PC.</p>
+
+  <div class="option"><span class="tagnum">Option 1</span> NoodleManager — the easy way</div>
+
+  <div class="step">
+    <div class="step-marker"><span>01</span></div>
+    <h3>Point NoodleManager at your install</h3>
+    <p>Download NoodleManager (currently linked on synthriderz.com), open it, then point it at your Synth Riders install folder. On the top row click <span class="btn-label">Settings</span>, then click <span class="btn-label">Select</span> and navigate to the <code>SynthRidersUC</code> folder — usually found at:</p>
+    <pre class="code-block"><code>C:\Program Files (x86)\Steam\steamapps\common\SynthRiders\SynthRidersUC\</code></pre>
+    <p>If yours is somewhere else, follow step 1a to find it.</p>
+    <figure class="shot">
+      <img src="images/noodlemanager-settings.png" alt="NoodleManager settings, selecting the SynthRidersUC folder" />
+      <figcaption>NoodleManager settings — pointing it at the SynthRidersUC folder</figcaption>
+    </figure>
+  </div>
+
+  <div class="step">
+    <div class="step-marker"><span>1a</span></div>
+    <h3>Can't find the install folder?</h3>
+    <p>Open Steam, right-click Synth Riders, hover <span class="btn-label">Manage</span>, then click <span class="btn-label">Browse Local Files</span> — this opens the game's install location in a file manager window. Make a note of that path; it's where you point NoodleManager (back at step 1).</p>
+    <figure class="shot">
+      <img src="images/steam-browse-local-files.png" alt="Steam right-click menu with Browse Local Files" />
+      <figcaption>Steam → Manage → Browse Local Files</figcaption>
+    </figure>
+  </div>
+
+  <div class="step">
+    <div class="step-marker"><span>02</span></div>
+    <h3>Grab the custom songs</h3>
+    <p>With NoodleManager pointed at the right directory, go to the <span class="btn-label">Maps</span> tab at the top. If it's your first time, the <span class="btn-label">Get All</span> button in the purple bar downloads everything — it can take a while to acquire, but it's worth it. Just want the latest? Use <span class="btn-label">Get Page</span> or click the download icon on an individual map.</p>
+    <figure class="shot">
+      <img src="images/noodlemanager-maps.png" alt="NoodleManager Maps tab with the Get All button" />
+      <figcaption>The Maps tab — Get All, Get Page, or download individually</figcaption>
+    </figure>
+  </div>
+
+  <div class="step">
+    <div class="step-marker"><span>03</span></div>
+    <h3>Done</h3>
+    <p>That's it. Next time, just open NoodleManager and download new maps whenever you want them.</p>
+  </div>
+
+  <div class="option"><span class="tagnum">Option 2</span> Manual — the site downloader</div>
+  <p class="section-intro">First, know the directory you're installing to — find it with step 1a above. It's typically:</p>
+  <pre class="code-block"><code>C:\Program Files (x86)\Steam\steamapps\common\SynthRiders\SynthRidersUC\</code></pre>
+  <p class="section-intro">Then head to <a href="https://synthriderz.com" target="_blank" rel="noopener">synthriderz.com</a> and click the <span class="btn-label">Custom Songs</span> option on the left — you'll land on this page:</p>
+  <figure class="shot">
+    <img src="images/synthriderz-songs-page.png" alt="The custom songs page on synthriderz.com" />
+    <figcaption>The custom songs listing on synthriderz.com</figcaption>
+  </figure>
+  <p class="section-intro" style="margin-top:16px">Click the download button and the site's own downloader appears, with two ways to go:</p>
+  <figure class="shot">
+    <img src="images/site-downloader.png" alt="The synthriderz website downloader dialog" />
+    <figcaption>The synthriderz downloader</figcaption>
+  </figure>
+
+  <div class="subhead">Path A — install straight into the game folder</div>
+  <p style="color:var(--text)">This has the site install directly to the <code>CustomSongs</code> folder inside <code>SynthRidersUC</code>.</p>
+  <div class="callout">
+    <strong>Note:</strong> this only works in Chromium-based browsers (Chrome, Edge, Vivaldi, etc.), and won't work if the game is installed in the default location — Windows blocks write access to that protected folder.
+  </div>
+  <div class="step">
+    <div class="step-marker"><span>01</span></div>
+    <h3>Point it at the CustomSongs folder</h3>
+    <p>Click the direct-install option, click <span class="btn-label">OK</span>, then point it to the <code>CustomSongs</code> folder.</p>
+    <figure class="shot">
+      <img src="images/site-downloader-ok.png" alt="Dialog prompting to select the CustomSongs folder" />
+      <figcaption>Confirm, then choose the CustomSongs folder</figcaption>
+    </figure>
+  </div>
+  <div class="step">
+    <div class="step-marker"><span>02</span></div>
+    <h3>Allow browser access</h3>
+    <p>The browser pops a notification asking to read and write to the folder — click <span class="btn-label">Allow</span>.</p>
+    <div class="shot-pair">
+      <figure class="shot"><img src="images/browser-allow-1.png" alt="Browser file access permission prompt" /></figure>
+      <figure class="shot"><img src="images/browser-allow-2.png" alt="Browser confirming file access" /></figure>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-marker"><span>03</span></div>
+    <h3>Start the download</h3>
+    <p>The downloader's ready — click <span class="btn-label">Start Download</span> and go grab yourself a nice brew while it does its thing.</p>
+    <figure class="shot">
+      <img src="images/site-download-start.png" alt="The site downloader running" />
+      <figcaption>Downloading straight into CustomSongs</figcaption>
+    </figure>
+    <p>When it says <strong>Download complete</strong>, the songs are installed. Open Synth Riders and let it build the song database — keep enjoying that brew. Once it's done, your custom songs are ready in solo mode or in multiplayer lobbies.</p>
+  </div>
+
+  <div class="subhead">Path B — download elsewhere, then move</div>
+  <p style="color:var(--text)">If you don't want to install directly, or Path A gives you trouble, point the downloader at any folder <em>outside</em> Windows' protected locations.</p>
+  <div class="step">
+    <div class="step-marker"><span>01</span></div>
+    <h3>Download to a folder you choose</h3>
+    <p>In the example below there's a folder named <code>CustomSongs Store</code> on the desktop. Point the downloader there — remember where it is, since you'll be moving the beatmaps out of it next.</p>
+    <figure class="shot">
+      <img src="images/customsongs-store-folder.png" alt="A CustomSongs Store folder on the desktop" />
+      <figcaption>Downloading to a normal (non-protected) folder</figcaption>
+    </figure>
+  </div>
+  <div class="step">
+    <div class="step-marker"><span>02</span></div>
+    <h3>Move them into CustomSongs</h3>
+    <p>Paste the beatmap files into the <code>CustomSongs</code> folder inside <code>SynthRidersUC</code> so the game can read them and build its database. Start the game and let that database build/update.</p>
+    <figure class="shot">
+      <img src="images/paste-into-customsongs.png" alt="Pasting beatmaps into the CustomSongs folder" />
+      <figcaption>Pasting the beatmaps into the game's CustomSongs folder</figcaption>
+    </figure>
+  </div>
+
+  <!-- ============================================================
+       CUSTOM STAGES (PC + QUEST)
+       ============================================================ -->
+  <h2 class="section-title">Custom stages — PC &amp; Quest</h2>
+  <p class="section-intro">There's currently one method for both platforms: download the stage you want from synthriderz for your device. The only difference is the stage file itself — each platform needs its own.</p>
+  <table class="file-table">
+    <tr><th>Platform</th><th>Look for</th><th>Extension</th></tr>
+    <tr><td>PC</td><td>the PC icon on the stage's page</td><td class="ext">.stage</td></tr>
+    <tr><td>Quest / standalone</td><td>the Quest logo on the stage's page</td><td class="ext">.stagedroid</td></tr>
+  </table>
+  <figure class="shot">
+    <img src="images/synthriderz-stages-page.png" alt="The stages page on synthriderz showing PC and Quest download icons" />
+    <figcaption>Stage downloads on synthriderz — PC vs Quest icons</figcaption>
+  </figure>
+
+  <div class="step">
+    <div class="step-marker"><span>01</span></div>
+    <h3>Move it into the CustomStages folder</h3>
+    <p>Put the downloaded stage into the <code>CustomStages</code> folder — it sits in the same place as <code>CustomSongs</code>. On PC that's inside <code>SynthRidersUC</code> in the game's install directory. On Quest, the folder is at the root level of the device's storage.</p>
+    <figure class="shot">
+      <img src="images/customstages-folder.png" alt="The CustomStages folder" />
+      <figcaption>The CustomStages folder, alongside CustomSongs</figcaption>
+    </figure>
+  </div>
+  <div class="step">
+    <div class="step-marker"><span>02</span></div>
+    <h3>Load it in game</h3>
+    <p>Start the game and let it load the stage into the database — this is usually quick. Then select it from the <span class="btn-label">Stages</span> tab on the left panel when you enter solo or multiplayer.</p>
+  </div>
+
+  <div class="foot">
+    <span>Setting up a mod instead of content? <a href="how-to-install-melonloader.html">See the MelonLoader install guide →</a></span>
+    <a class="back-home" href="index.html">← Back to mods</a>
+  </div>
+
+</article>
+</body>
+</html>
