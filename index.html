@@ -394,7 +394,7 @@ h1 .beam-text{
     <div class="nav-links">
       <a href="#drops">Drops</a>
       <a href="#about">About</a>
-      <a href="how-to-install-melonloader.html">Guide</a>
+      <a href="guides.html">Guide</a>
       <a href="" id="nav-github">GitHub</a>
       <a href="" id="nav-twitch">Twitch</a>
     </div>
@@ -611,6 +611,13 @@ const PROJECTS = [
     tags:["Synth Riders","Stage"],
     dl:"https://synthriderz.com/models/stages/253#files"
 },
+{
+    title:"Guides & How-tos",
+    category:"Guides",
+    blurb:"New to modding Synth Riders? Step-by-step walkthroughs for installing MelonLoader and loading up custom songs and stages on PC and Quest.",
+    tags:["MelonLoader","Custom content","Beginner"],
+    page:"guides.html"
+},
 ];
 
 /* ============================================================
@@ -648,6 +655,7 @@ function cardHTML(p){
   if(p.repo)  links.push(`<a class="link" href="${resolve(p.repo)}" target="_blank" rel="noopener">${ICONS.repo}Source</a>`);
   if(p.video) links.push(`<a class="link" href="${resolve(p.video)}" target="_blank" rel="noopener">${ICONS.video}Preview</a>`);
   if(p.guide) links.push(`<a class="link" href="${resolve(p.guide)}" target="_blank" rel="noopener">${ICONS.guide}Setup guide</a>`);
+  if(p.page)  links.push(`<a class="link solid" href="${p.page}">${ICONS.guide}Open guides</a>`);
 
   return `<article class="card" data-cat="${p.category}">
     <div class="card-top">
