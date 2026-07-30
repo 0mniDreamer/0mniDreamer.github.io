@@ -137,10 +137,10 @@ table.file-table td:first-child{font-family:var(--font-mono);color:var(--magenta
   <header class="hero">
     <span class="eyebrow">Guide · Custom content</span>
     <h1>Adding Custom Content to Synth Riders</h1>
-    <p class="updated">Last updated <b>[ add date ]</b> · work in progress</p>
+    <p class="updated">Last updated <b>30-07-2026</b> · work in progress</p>
     <p class="lede">
-      Custom songs and stages are <strong style="color:var(--text)">officially supported</strong> in Synth Riders — they're
-      drop-in files, so you don't need MelonLoader to use them. This covers adding custom songs on PC and custom stages on
+      Custom songs and stages are <strong style="color:var(--text)"> supported</strong> in Synth Riders — they're
+      drop-in files, so you don't need MelonLoader to use them. This guide covers adding custom songs on PC and custom stages on
       both PC and Quest.
     </p>
     <div class="callout">
@@ -149,8 +149,8 @@ table.file-table td:first-child{font-family:var(--font-mono);color:var(--magenta
       is the community hub for custom songs, stages, playlists, and avatars.
     </div>
     <div class="callout info">
-      <strong>After the Unity / UI update</strong> the game folder is now <code>SynthRidersUC</code> — that's where the
-      <code>CustomSongs</code> and <code>CustomStages</code> folders live on PC.
+      <strong>After the Unity / UI update</strong> the game folder in which we need to add the user made content is now called <code>SynthRidersUC</code> — that's where the
+      <code>CustomSongs</code> and <code>CustomStages</code> folders live on PC and Quest.
     </div>
   </header>
 
@@ -177,7 +177,7 @@ table.file-table td:first-child{font-family:var(--font-mono);color:var(--magenta
   <div class="step">
     <div class="step-marker"><span>1a</span></div>
     <h3>Can't find the install folder?</h3>
-    <p>Open Steam, right-click Synth Riders, hover <span class="btn-label">Manage</span>, then click <span class="btn-label">Browse Local Files</span> — this opens the game's install location in a file manager window. Make a note of that path; it's where you point NoodleManager (back at step 1).</p>
+    <p>Open Steam, right-click Synth Riders, hover mouse over <span class="btn-label">Manage</span>, then click <span class="btn-label">Browse Local Files</span> — this opens the game's install location in a file manager window. Make a note of that path; it's where you will need to point NoodleManager (back at step 1) and for adding other custom content to later.</p>
     <figure class="shot">
       <img src="images/steam-browse-local-files.png" alt="Steam right-click menu with Browse Local Files" />
       <figcaption>Steam → Manage → Browse Local Files</figcaption>
@@ -186,7 +186,7 @@ table.file-table td:first-child{font-family:var(--font-mono);color:var(--magenta
 
   <div class="step">
     <div class="step-marker"><span>02</span></div>
-    <h3>Grab the custom songs</h3>
+    <h3>Downloading the Custom Songs</h3>
     <p>With NoodleManager pointed at the right directory, go to the <span class="btn-label">Maps</span> tab at the top. If it's your first time, the <span class="btn-label">Get All</span> button in the purple bar downloads everything — it can take a while to acquire, but it's worth it. Just want the latest? Use <span class="btn-label">Get Page</span> or click the download icon on an individual map.</p>
     <figure class="shot">
       <img src="images/noodlemanager-maps.png" alt="NoodleManager Maps tab with the Get All button" />
@@ -201,7 +201,7 @@ table.file-table td:first-child{font-family:var(--font-mono);color:var(--magenta
   </div>
 
   <div class="option"><span class="tagnum">Option 2</span> Manual — the site downloader</div>
-  <p class="section-intro">First, know the directory you're installing to — find it with step 1a above. It's typically:</p>
+  <p class="section-intro">First, you'll need to know the directory you're installing them to — find it with step 1a above. It's typically:</p>
   <pre class="code-block"><code>C:\Program Files (x86)\Steam\steamapps\common\SynthRiders\SynthRidersUC\</code></pre>
   <p class="section-intro">Then head to <a href="https://synthriderz.com" target="_blank" rel="noopener">synthriderz.com</a> and click the <span class="btn-label">Custom Songs</span> option on the left — you'll land on this page:</p>
   <figure class="shot">
@@ -215,9 +215,9 @@ table.file-table td:first-child{font-family:var(--font-mono);color:var(--magenta
   </figure>
 
   <div class="subhead">Path A — install straight into the game folder</div>
-  <p style="color:var(--text)">This has the site install directly to the <code>CustomSongs</code> folder inside <code>SynthRidersUC</code>.</p>
+  <p style="color:var(--text)">This has the site install directly to the <code>CustomSongs</code> folder inside <code>SynthRidersUC</code> provided it isnt installed in the Program Files directory.</p>
   <div class="callout">
-    <strong>Note:</strong> this only works in Chromium-based browsers (Chrome, Edge, Vivaldi, etc.), and won't work if the game is installed in the default location — Windows blocks write access to that protected folder.
+    <strong>Note:</strong> this only works in Chromium-based browsers (Chrome, Edge, Vivaldi, etc.), and won't work if the game is installed in the default location — Windows blocks write access to protected folders.
   </div>
   <div class="step">
     <div class="step-marker"><span>01</span></div>
@@ -240,19 +240,19 @@ table.file-table td:first-child{font-family:var(--font-mono);color:var(--magenta
   <div class="step">
     <div class="step-marker"><span>03</span></div>
     <h3>Start the download</h3>
-    <p>The downloader's ready — click <span class="btn-label">Start Download</span> and go grab yourself a nice brew while it does its thing.</p>
+    <p>The downloader's ready to go — click <span class="btn-label">Start Download</span> and go grab yourself a nice brew while it does its thing.</p>
     <figure class="shot">
       <img src="images/site-download-start.png" alt="The site downloader running" />
       <figcaption>Downloading straight into CustomSongs</figcaption>
     </figure>
-    <p>When it says <strong>Download complete</strong>, the songs are installed. Open Synth Riders and let it build the song database — keep enjoying that brew. Once it's done, your custom songs are ready in solo mode or in multiplayer lobbies.</p>
+    <p>When it says <strong>Download complete</strong>, the songs are installed. Open Synth Riders and let the game build the song database — keep enjoying that brew. Once it's done, your custom songs are ready to go in solo mode or in multiplayer lobbies.</p>
   </div>
 
   <div class="subhead">Path B — download elsewhere, then move</div>
-  <p style="color:var(--text)">If you don't want to install directly, or Path A gives you trouble, point the downloader at any folder <em>outside</em> Windows' protected locations.</p>
+  <p style="color:var(--text)">If you don't want to install directly, or Path A gives you trouble, point the downloader at any folder <em>outside</em> Windows' protected locations. ie a Folder on the desktop.</p>
   <div class="step">
     <div class="step-marker"><span>01</span></div>
-    <h3>Download to a folder you choose</h3>
+    <h3>Downloading to a folder you choose</h3>
     <p>In the example below there's a folder named <code>CustomSongs Store</code> on the desktop. Point the downloader there — remember where it is, since you'll be moving the beatmaps out of it next.</p>
     <figure class="shot">
       <img src="images/customsongs-store-folder.png" alt="A CustomSongs Store folder on the desktop" />
@@ -262,7 +262,7 @@ table.file-table td:first-child{font-family:var(--font-mono);color:var(--magenta
   <div class="step">
     <div class="step-marker"><span>02</span></div>
     <h3>Move them into CustomSongs</h3>
-    <p>Paste the beatmap files into the <code>CustomSongs</code> folder inside <code>SynthRidersUC</code> so the game can read them and build its database. Start the game and let that database build/update.</p>
+    <p>Cut/copy the contents of this folder we downloaded the Custom Songs to and Paste the beatmap files into the <code>CustomSongs</code> folder located inside <code>SynthRidersUC</code> so the game can read them and build its database. Once complete start the game and let that database build/update.</p>
     <figure class="shot">
       <img src="images/paste-into-customsongs.png" alt="Pasting beatmaps into the CustomSongs folder" />
       <figcaption>Pasting the beatmaps into the game's CustomSongs folder</figcaption>
@@ -277,7 +277,7 @@ table.file-table td:first-child{font-family:var(--font-mono);color:var(--magenta
   <table class="file-table">
     <tr><th>Platform</th><th>Look for</th><th>Extension</th></tr>
     <tr><td>PC</td><td>the PC icon on the stage's page</td><td class="ext">.stage</td></tr>
-    <tr><td>Quest / standalone</td><td>the Quest logo on the stage's page</td><td class="ext">.stagedroid</td></tr>
+    <tr><td>Quest / Standalone</td><td>the Quest logo on the stage's page</td><td class="ext">.stagedroid</td></tr>
   </table>
   <figure class="shot">
     <img src="images/synthriderz-stages-page.png" alt="The stages page on synthriderz showing PC and Quest download icons" />
@@ -287,7 +287,7 @@ table.file-table td:first-child{font-family:var(--font-mono);color:var(--magenta
   <div class="step">
     <div class="step-marker"><span>01</span></div>
     <h3>Move it into the CustomStages folder</h3>
-    <p>Put the downloaded stage into the <code>CustomStages</code> folder — it sits in the same place as <code>CustomSongs</code>. On PC that's inside <code>SynthRidersUC</code> in the game's install directory. On Quest, the folder is at the root level of the device's storage.</p>
+    <p>Once you have downloaded the stage or stages you want we need to move them from the location you downloaded them to and put the downloaded stage or stages into the <code>CustomStages</code> folder — it sits in the same place as <code>CustomSongs</code>. On PC that's inside <code>SynthRidersUC</code> in the game's install directory. On Quest, the folder is at the root level of the device's storage. you will find the <code>SynthRidersUC</code> folder and in here you will find the CustomStages folder ( If you dont see it in here please create the folder and name it exactly CustomStages) and paste the stage file in to this folder. </p>
     <figure class="shot">
       <img src="images/customstages-folder.png" alt="The CustomStages folder" />
       <figcaption>The CustomStages folder, alongside CustomSongs</figcaption>
@@ -296,7 +296,7 @@ table.file-table td:first-child{font-family:var(--font-mono);color:var(--magenta
   <div class="step">
     <div class="step-marker"><span>02</span></div>
     <h3>Load it in game</h3>
-    <p>Start the game and let it load the stage into the database — this is usually quick. Then select it from the <span class="btn-label">Stages</span> tab on the left panel when you enter solo or multiplayer.</p>
+    <p>Start the game and let it load the stage or stages into the database — this is usually quick and you wont even see it sometimes. Now to play on the new stage you need select it from the <span class="btn-label">Stages</span> tab on the left panel when you enter solo mode or multiplayer lobbies.</p>
   </div>
 
   <div class="foot">
