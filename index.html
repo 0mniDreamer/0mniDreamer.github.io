@@ -390,7 +390,7 @@ h1 .beam-text{
      ============================================================ -->
 <nav class="nav">
   <div class="wrap nav-inner">
-    <a class="brand" href="#top"><span class="dot"></span>OmniDreamer_<span style="color:var(--dim);font-weight:400">/mods</span></a>
+    <a class="brand" href="#top"><span class="dot"></span>OmniDreamer_<span style="color:var(--dim);font-weight:400">/Content</span></a>
     <div class="nav-links">
       <a href="#drops">Drops</a>
       <a href="#about">About</a>
@@ -409,7 +409,7 @@ h1 .beam-text{
   <div class="hero-glow"></div>
   <div class="hero-vignette"></div>
   <div class="wrap hero-content">
-    <span class="eyebrow">VR mods · custom stages</span>
+    <span class="eyebrow">VR mods · Custom Stages · Guides</span>
     <h1>Building the stage<br />you play <span class="beam-text">inside of.</span></h1>
     <p class="lede">Mods, VR stages, single-pass stereo shaders and streaming tools — mostly for Synth Riders. All open, all yours to grab.</p>
     <div class="hero-cta">
@@ -427,7 +427,7 @@ h1 .beam-text{
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">The drops</span>
-      <h2>Mods &amp; custom stages</h2>
+      <h2>Mods &amp; Custom Content &amp; Guides</h2>
     </div>
 
     <div class="filters" id="filters"></div>
@@ -496,8 +496,8 @@ h1 .beam-text{
    Every GitHub / Twitch link on the page is built from them.
    ============================================================ */
 const CONFIG = {
-  githubUser: "0mniDreamer",   // e.g. "sam-vr"
-  twitchUser: "omnidreamer_"    // e.g. "samstreams"
+  githubUser: "0mniDreamer",   // e.g. "Username" (no trailing slash)
+  twitchUser: "omnidreamer_"    // e.g. "Username" (no trailing slash)
 };
 
 /* ============================================================
@@ -522,6 +522,15 @@ const PROJECTS = [
     repo:"0mniDreamer/SynthPerfFixforCustomStages",
     dl:"0mniDreamer/SynthPerfFixforCustomStages/releases"
   },
+  {
+    title:"Synth Riders Camera2",
+    category:"Mods",
+    status :"New",
+    blurb:"Camera2-style multi-camera desktop viewing for Synth Riders PCVR, built for streamers and mixed-reality capture, inspired by kinsi55's Camera2 for Beat Saber.",
+    tags:["Synth Riders","MelonLoader","Mods","C#"],
+    repo:"0mniDreamer/SynthCamera2",
+    dl:"0mniDreamer/SynthCamera2/releases"
+ },
  {
     title:"Synth Strobe RGB",
     category:"Mods",
