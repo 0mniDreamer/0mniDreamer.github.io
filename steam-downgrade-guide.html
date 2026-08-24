@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>How to Downgrade Steam Apps &amp; Games — OmniDreamer</title>
+<meta name="description" content="Download and roll back to an older version of a Steam game you own, using SteamDB and the Steam console." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+
+<style>
+:root{
+  --void:#0A0612;--void-2:#0D0819;--panel:#150F28;--panel-2:#1B1436;
+  --line:rgba(157,124,255,0.16);--line-strong:rgba(157,124,255,0.32);
+  --cyan:#24E3FF;--magenta:#FF2E9A;--violet:#9D5CFF;--amber:#FFC24B;
+  --text:#ECE7FA;--muted:#9E96C4;--dim:#6E668F;
+  --beam:linear-gradient(90deg,var(--cyan),var(--violet) 55%,var(--magenta));
+  --font-display:'Chakra Petch',system-ui,sans-serif;
+  --font-body:'Space Grotesk',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+  --maxw:1120px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--void);color:var(--text);font-family:var(--font-body);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);background:rgba(10,6,18,0.72);border-bottom:1px solid var(--line)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{font-family:var(--font-display);font-weight:700;letter-spacing:0.04em;font-size:1.05rem;display:flex;align-items:center;gap:10px}
+.brand .dot{width:9px;height:9px;border-radius:50%;background:var(--beam);box-shadow:0 0 12px var(--magenta)}
+.nav-links{display:flex;gap:8px;align-items:center}
+.nav-links a{font-family:var(--font-mono);font-size:0.74rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);padding:8px 12px;border-radius:8px;transition:color .2s,background .2s}
+.nav-links a:hover{color:var(--text);background:rgba(157,124,255,0.08)}
+.nav-links a.current{color:var(--cyan)}
+
+/* ARTICLE */
+.article{position:relative;max-width:820px;margin:0 auto;padding:0 24px 120px}
+.article::before{content:"";position:absolute;left:50%;top:-40px;transform:translateX(-50%);width:120%;height:320px;z-index:0;pointer-events:none;background:radial-gradient(ellipse 46% 100% at 50% 0%,rgba(36,227,255,0.14),rgba(157,92,255,0.10) 42%,transparent 72%);filter:blur(8px)}
+.article > *{position:relative;z-index:1}
+.hero{padding:72px 0 44px}
+.eyebrow{font-family:var(--font-mono);font-size:0.76rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--cyan);display:inline-flex;align-items:center;gap:10px;margin-bottom:20px}
+.eyebrow::before{content:"";width:26px;height:1px;background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+.updated{font-family:var(--font-mono);font-size:0.72rem;letter-spacing:0.06em;color:var(--dim);margin-bottom:20px}
+.updated b{color:var(--muted);font-weight:600}
+h1{font-family:var(--font-display);font-weight:700;font-size:clamp(2rem,5.5vw,3.3rem);line-height:1.04;letter-spacing:-0.01em;margin-bottom:20px}
+.lede{font-size:clamp(1rem,2vw,1.15rem);color:var(--muted);max-width:62ch}
+.lede a{color:var(--cyan)}
+.callout{margin-top:22px;padding:16px 18px;background:linear-gradient(180deg,var(--panel-2),var(--panel));border:1px solid var(--line);border-left:3px solid var(--amber);border-radius:10px;font-size:0.92rem;color:var(--muted)}
+.callout strong{color:var(--amber);font-weight:600}
+.callout a{color:var(--cyan)}
+.callout.info{border-left-color:var(--cyan)}
+.callout.info strong{color:var(--cyan)}
+
+.section-title{font-family:var(--font-mono);font-size:0.74rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--dim);margin:58px 0 22px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+
+/* requirements list */
+ul.reqs{list-style:none;display:grid;gap:10px}
+ul.reqs li{display:flex;gap:12px;padding:13px 16px;background:linear-gradient(180deg,var(--panel-2),var(--panel));border:1px solid var(--line);border-radius:12px;font-size:0.95rem}
+ul.reqs li::before{content:"◇";color:var(--cyan);flex-shrink:0}
+ul.reqs li strong{color:var(--text)}
+
+/* steps */
+.step{position:relative;padding:0 0 38px 44px;border-left:1px solid var(--line);margin-left:14px}
+.step:last-child{border-left-color:transparent;padding-bottom:4px}
+.step-marker{position:absolute;left:-14px;top:0;width:28px;height:28px;border-radius:50%;background:var(--beam);padding:1.5px;box-shadow:0 0 14px rgba(255,46,154,0.35)}
+.step-marker span{display:flex;align-items:center;justify-content:center;width:100%;height:100%;border-radius:50%;background:var(--void);color:var(--cyan);font-family:var(--font-mono);font-size:11px;font-weight:600}
+.step h3{font-family:var(--font-display);font-weight:600;font-size:1.26rem;margin-bottom:10px}
+.step p{margin-bottom:12px;font-size:1rem;color:var(--text)}
+.step p:last-child{margin-bottom:0}
+
+/* code + pills */
+code{font-family:var(--font-mono);font-size:0.85em;background:var(--panel-2);border:1px solid var(--line);padding:1px 6px;border-radius:5px;color:var(--cyan)}
+pre.code-block{background:var(--void-2);border:1px solid var(--line);border-radius:12px;padding:14px 16px;overflow-x:auto;margin:10px 0 18px}
+pre.code-block code{background:none;border:none;padding:0;color:#8fe9ff;font-size:0.84rem;line-height:1.7}
+.btn-label{display:inline-block;font-family:var(--font-mono);font-size:0.72rem;font-weight:600;letter-spacing:0.04em;padding:3px 9px;border-radius:6px;background:rgba(36,227,255,0.09);color:var(--cyan);border:1px solid rgba(36,227,255,0.32)}
+
+/* screenshot slots */
+figure.shot{margin:16px 0 4px;border:1px dashed var(--line-strong);border-radius:12px;background:var(--panel);overflow:hidden}
+figure.shot .img-slot{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:var(--dim);font-family:var(--font-mono);font-size:0.78rem;padding:20px;text-align:center}
+figure.shot .img-slot .path{color:var(--magenta)}
+figure.shot img{display:block;width:100%;height:auto}
+figure.shot figcaption{padding:10px 14px;font-size:0.82rem;color:var(--muted);border-top:1px solid var(--line);font-style:italic}
+
+.note{font-size:0.88rem;color:var(--muted);margin-top:14px}
+.note code{color:var(--cyan)}
+
+/* footer */
+.foot{margin-top:72px;padding-top:24px;border-top:1px solid var(--line);font-size:0.9rem;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}
+.foot a{color:var(--cyan)}
+.foot a:hover{text-decoration:underline}
+.back-home{font-family:var(--font-mono);font-size:0.72rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted)}
+.back-home:hover{color:var(--cyan)}
+
+@media(max-width:600px){.article{padding:0 18px 90px}.step{padding-left:32px;margin-left:8px}.nav-links a{padding:8px 8px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:4px}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html"><span class="dot"></span>OmniDreamer_<span style="color:var(--dim);font-weight:400">/mods</span></a>
+    <div class="nav-links">
+      <a href="index.html#drops">Drops</a>
+      <a href="index.html#about">About</a>
+      <a href="guides.html" class="current">Guide</a>
+      <a href="https://github.com/0mniDreamer" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.twitch.tv/omnidreamer_" target="_blank" rel="noopener">Twitch</a>
+    </div>
+  </div>
+</nav>
+
+<article class="article">
+
+  <header class="hero">
+    <span class="eyebrow">Guide · Steam</span>
+    <h1>How to Downgrade Steam Apps &amp; Games</h1>
+    <p class="updated">Last updated <b>[ add date ]</b></p>
+    <p class="lede">
+      Need an older build of a Steam game — say, because a mod only works on a specific version? You can pull almost any
+      previous version back down using <a href="https://steamdb.info" target="_blank" rel="noopener">SteamDB</a> and Steam's
+      own console. It works because SteamDB records every update, so any version that was live after the game's public
+      release can be re-downloaded.
+    </p>
+    <div class="callout">
+      <strong>Fair warning:</strong> back up your current install before you start, and note that this only pulls depots for
+      games you actually own — it uses Steam's built-in <code>download_depot</code> command, nothing sketchy.
+    </div>
+    <div class="callout info">
+      <strong>Credit:</strong> the method here is based on a guide originally written by Reddit user /u/GMMan_BZFlag — I've
+      just adapted the write-up.
+    </div>
+  </header>
+
+  <h2 class="section-title">What you'll need</h2>
+  <ul class="reqs">
+    <li>The game installed through Steam, on the account that <strong>owns</strong> it</li>
+    <li>A few minutes to grab the app ID, depot ID, and manifest ID from SteamDB</li>
+    <li>Enough disk space for a second copy of the game while you swap files</li>
+  </ul>
+
+  <h2 class="section-title">Steps</h2>
+
+  <div class="step">
+    <div class="step-marker"><span>01</span></div>
+    <h3>Find the game on SteamDB</h3>
+    <p>Head to <a href="https://steamdb.info" target="_blank" rel="noopener" style="color:var(--cyan)">steamdb.info</a> and search for the game you want to roll back.</p>
+    <figure class="shot">
+      <!-- When you have the image, replace this whole <div class="img-slot">...</div> block with:
+           <img src="images/steam-dg-01-search.png" alt="Searching for the game on SteamDB" /> -->
+      <div class="img-slot"><div>screenshot placeholder</div><div class="path">images/steam-dg-01-search.png</div></div>
+      <figcaption>Searching SteamDB for the game</figcaption>
+    </figure>
+  </div>
+
+  <div class="step">
+    <div class="step-marker"><span>02</span></div>
+    <h3>Open its app page</h3>
+    <p>Click the <strong>app ID</strong> of the correct entry (watch out for "Unstable"/"Dedicated Server" variants — you usually want the plain "Game" row). That opens the game's details page.</p>
+  </div>
+
+  <div class="step">
+    <div class="step-marker"><span>03</span></div>
+    <h3>Go to Depots and pick one</h3>
+    <p>In the left-hand menu, open <span class="btn-label">Depots</span>, then click the depot ID you want to download — for most Windows games that's the <em>Windows 64 Depot</em>. This opens the depot's own page.</p>
+    <figure class="shot">
+      <!-- <img src="images/steam-dg-03-depots.png" alt="The Depots list on SteamDB" /> -->
+      <div class="img-slot"><div>screenshot placeholder</div><div class="path">images/steam-dg-03-depots.png</div></div>
+      <figcaption>Choosing a depot from the left menu</figcaption>
+    </figure>
+  </div>
+
+  <div class="step">
+    <div class="step-marker"><span>04</span></div>
+    <h3>Open the Manifests tab and copy the manifest ID</h3>
+    <p>Click the <span class="btn-label">Manifests</span> tab. Each manifest is a point-in-time snapshot of that depot — i.e. one specific version. Find the date/version you want and copy its <strong>Manifest ID</strong> (the long number).</p>
+    <figure class="shot">
+      <!-- <img src="images/steam-dg-04-manifests.png" alt="The Manifests tab with manifest IDs" /> -->
+      <div class="img-slot"><div>screenshot placeholder</div><div class="path">images/steam-dg-04-manifests.png</div></div>
+      <figcaption>Finding the version's manifest ID</figcaption>
+    </figure>
+    <p class="note">By now you should have three numbers written down: the <strong>app ID</strong>, the <strong>depot ID</strong>, and the <strong>manifest ID</strong>.</p>
+  </div>
+
+  <div class="step">
+    <div class="step-marker"><span>05</span></div>
+    <h3>Open the Steam console</h3>
+    <p>Paste this into your browser's address bar, or the Windows Run box (<code>Win</code> + <code>R</code>):</p>
+    <pre class="code-block"><code>steam://nav/console</code></pre>
+    <p>Press enter, and when the "open with" prompt appears, choose the <strong>Steam Client</strong>. The console opens as a tab inside Steam.</p>
+  </div>
+
+  <div class="step">
+    <div class="step-marker"><span>06</span></div>
+    <h3>Run the download_depot command</h3>
+    <p>The full syntax is:</p>
+    <pre class="code-block"><code>download_depot &lt;appid&gt; &lt;depotid&gt; [&lt;target manifestid&gt;] [&lt;delta manifestid&gt;] [&lt;depot flags filter&gt;]</code></pre>
+    <p>You only need the first three arguments. So type the command followed by your app ID, depot ID, and manifest ID — for example:</p>
+    <pre class="code-block"><code>download_depot 211820 211823 4078134516115892237</code></pre>
+  </div>
+
+  <div class="step">
+    <div class="step-marker"><span>07</span></div>
+    <h3>Wait for it to download</h3>
+    <p>The console shows no progress bar, which is normal. You can confirm it's working by watching network activity on your Steam <span class="btn-label">Downloads</span> page. The download resumes if your connection drops — but <strong>not</strong> if you restart Steam, so leave the client running.</p>
+  </div>
+
+  <div class="step">
+    <div class="step-marker"><span>08</span></div>
+    <h3>Note where the files landed</h3>
+    <p>When it's finished, the console prints the output path — something like:</p>
+    <pre class="code-block"><code>...\Steam\steamapps\content\app_&lt;appid&gt;\depot_&lt;depotid&gt;\</code></pre>
+    <figure class="shot">
+      <!-- <img src="images/steam-dg-08-output.png" alt="Depot download complete with output path" /> -->
+      <div class="img-slot"><div>screenshot placeholder</div><div class="path">images/steam-dg-08-output.png</div></div>
+      <figcaption>The console reporting where the depot downloaded to</figcaption>
+    </figure>
+  </div>
+
+  <div class="step">
+    <div class="step-marker"><span>09</span></div>
+    <h3>Swap the files into the game folder</h3>
+    <p>Open the game's normal install directory and move its current files somewhere safe (don't delete them — that's your backup). Then copy everything from the downloaded depot folder into the game's install folder.</p>
+  </div>
+
+  <div class="step">
+    <div class="step-marker"><span>10</span></div>
+    <h3>Fix the EXE name if needed</h3>
+    <p>If the developer changed the launch executable recently, the old files may use a different <code>.exe</code> name than Steam now expects. Check the current name under the game's SteamDB <span class="btn-label">Configuration</span> tab and rename to match if launching fails.</p>
+  </div>
+
+  <h2 class="section-title">Finished</h2>
+  <p style="color:var(--text)">You should now be able to launch the older version straight through Steam.</p>
+  <div class="callout">
+    <strong>Keep it from re-updating:</strong> Steam will try to patch the game back to current. Keep a copy of these files so you don't have to re-download, and in the game's Steam <em>Properties → Updates</em>, set it to only update on launch so it won't quietly overwrite your build in the background.
+  </div>
+
+  <div class="foot">
+    <span>Back to all guides? <a href="guides.html">See the guides index →</a></span>
+    <a class="back-home" href="index.html">← Back to mods</a>
+  </div>
+
+</article>
+</body>
+</html>
