@@ -293,32 +293,47 @@ const CONFIG = {
   githubUser: "0mniDreamer",
   twitchUser: "omnidreamer_",
 
-  // folders inside THIS repo where the files live (relative to this page)
-  stageDir: "stages/",       // holds the .stage and .stagedroid files
-  imgDir:   "stages/img/",   // holds the preview images
+  // the folder in THIS repo that holds one sub-folder per stage
+  baseDir: "CustomStages/",
 };
 
 /* ============================================================
-   🎛️  STAGES  — add / edit / remove by editing this list.
+   🎛️  STAGES  — one entry per folder in CustomStages/.
 
-   Minimum per stage:  { name: "Stage Name" }
-   File + image names are auto-derived from the name, e.g.
-   "Full Moon Remastered" looks for:
-       stages/full-moon-remastered.stage
-       stages/full-moon-remastered.stagedroid
-       stages/img/full-moon-remastered.jpg
-   Name your files that way and you never touch the paths.
+   Simplest form: just the folder name as a string. The display
+   name is auto-spaced from it ("MoonGazing" -> "Moon Gazing"),
+   and the files are read from inside that folder:
+       CustomStages/MoonGazing/MoonGazing.stage
+       CustomStages/MoonGazing/MoonGazing.stagedroid
+       CustomStages/MoonGazing/MoonGazing.jpg   (preview image)
 
-   Overrides when a file doesn't match that pattern:
-     { name:"Odd One", slug:"odd_v2" }                  // custom base name
-     { name:"Odd One", pc:"a.stage", quest:"b.stagedroid" }  // explicit files
-     { name:"Odd One", img:"custom-shot.png" }          // custom image
+   ⚠️  This assumes the files INSIDE each folder share the folder's
+   name. If yours are named differently, use the object form to
+   override just that stage:
+     { folder:"MoonGazing", name:"Moon Gazing (v2)" }   // nicer label
+     { folder:"MoonGazing", pc:"level.stage", quest:"level.stagedroid" }
+     { folder:"MoonGazing", img:"preview.png" }         // different image
+   (pc / quest / img are file names WITHIN that folder.)
    ============================================================ */
 const STAGES = [
-  { name:"Full Moon Remastered" },
-  { name:"Purple Space Remastered" },
-  { name:"Moon Gazing" },
-  // ...add the rest, one line each
+  "AboveSunsetBase",
+  "AboveSunsetRemake",
+  "AstralTwinkle",
+  "AstralTwinkleRGB",
+  "BlueSky",
+  "CentreOfTheStorm",
+  "ColdNight",
+  "FantasySky",
+  "FantasySky2",
+  "MoonGazing",
+  "NebulaGreen",
+  "NebulaGreenEnhanced",
+  "NebulaPink",
+  "NebulaPurple",
+  "PurpleSpaceOG",
+  "SnowyNight",
+  "Starcadian",
+  // ...add the rest of your CustomStages folders here
 ];
 
 /* ============================================================
@@ -336,34 +351,45 @@ const ICONS = {
   quest:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="10" rx="4"/><path d="M9 12h6"/></svg>',
 };
 
-function slugify(name){
-  return name.trim().toLowerCase().replace(/[^\w]+/g,"-").replace(/^-+|-+$/g,"");
+// "MoonGazing" -> "Moon Gazing", "PurpleSpaceOG" -> "Purple Space OG",
+// "FantasySky2" -> "Fantasy Sky 2"
+function humanize(folder){
+  return folder
+    .replace(/([a-z0-9])([A-Z])/g,"$1 $2")
+    .replace(/([A-Za-z])(\d)/g,"$1 $2")
+    .trim();
 }
 function initials(name){
   return name.split(/\s+/).map(w=>w[0]).join("").slice(0,2).toUpperCase();
 }
-function filesFor(s){
-  const slug = s.slug || slugify(s.name);
+
+// turn a string or object entry into a fully-resolved stage
+function normalize(entry){
+  const e = (typeof entry === "string") ? { folder: entry } : entry;
+  const dir = CONFIG.baseDir + e.folder + "/";
   return {
-    pc:    CONFIG.stageDir + (s.pc    || slug + ".stage"),
-    quest: CONFIG.stageDir + (s.quest || slug + ".stagedroid"),
-    img:   CONFIG.imgDir   + (s.img   || slug + ".jpg"),
+    folder: e.folder,
+    name:   e.name || humanize(e.folder),
+    pc:     dir + (e.pc    || e.folder + ".stage"),
+    quest:  dir + (e.quest || e.folder + ".stagedroid"),
+    img:    dir + (e.img   || e.folder + ".jpg"),
   };
 }
 
+const ITEMS = STAGES.map(normalize);
+
 function cardHTML(s){
-  const f = filesFor(s);
   return `<article class="stage-card" data-name="${s.name.toLowerCase()}">
     <div class="shot">
       <span class="shot-fallback">${initials(s.name)}</span>
-      <img src="${f.img}" alt="${s.name} preview" loading="lazy" onerror="this.remove()">
+      <img src="${s.img}" alt="${s.name} preview" loading="lazy" onerror="this.remove()">
     </div>
     <h3>${s.name}</h3>
     <div class="dl-row">
-      <a class="dl dl-pc" href="${f.pc}" download>
+      <a class="dl dl-pc" href="${s.pc}" download>
         ${ICONS.pc}<span class="lbl">PC VR<span class="fmt">.stage</span></span>
       </a>
-      <a class="dl dl-quest" href="${f.quest}" download>
+      <a class="dl dl-quest" href="${s.quest}" download>
         ${ICONS.quest}<span class="lbl">Quest<span class="fmt">.stagedroid</span></span>
       </a>
     </div>
@@ -385,14 +411,14 @@ function render(list){
   });
 }
 
-render(STAGES);
+render(ITEMS);
 
 /* SEARCH: remove this block if you removed the input */
 const search = document.getElementById("search");
 if(search){
   search.addEventListener("input", e=>{
     const q = e.target.value.trim().toLowerCase();
-    render(q ? STAGES.filter(s=>s.name.toLowerCase().includes(q)) : STAGES);
+    render(q ? ITEMS.filter(s=>s.name.toLowerCase().includes(q)) : ITEMS);
   });
 }
 </script>
