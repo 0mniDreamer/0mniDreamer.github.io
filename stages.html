@@ -305,7 +305,7 @@ const CONFIG = {
    and the files are read from inside that folder:
        CustomStages/MoonGazing/MoonGazing.stage
        CustomStages/MoonGazing/MoonGazing.stagedroid
-       CustomStages/MoonGazing/MoonGazing.jpg   (preview image)
+       CustomStages/MoonGazing/MoonGazing.png   (preview image)
 
    ⚠️  This assumes the files INSIDE each folder share the folder's
    name. If yours are named differently, use the object form to
@@ -372,7 +372,7 @@ function normalize(entry){
     name:   e.name || humanize(e.folder),
     pc:     dir + (e.pc    || e.folder + ".stage"),
     quest:  dir + (e.quest || e.folder + ".stagedroid"),
-    img:    dir + (e.img   || e.folder + ".jpg"),
+    img:    dir + (e.img   || e.folder + ".png"),
   };
 }
 
