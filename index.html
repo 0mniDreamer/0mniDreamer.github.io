@@ -487,6 +487,9 @@ h1 .beam-text{
       <a class="social" href="" id="foot-twitch" aria-label="Twitch">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.3 1 2 5.5v14.2h5V23h3l3.2-3.3h4.4L23 14V1H4.3Zm16.5 12.2-3 3H13l-3 3v-3H5.7V2.7h15.1v10.5ZM17 5.6h-1.9v5.4H17V5.6Zm-4.9 0h-1.9v5.4h1.9V5.6Z"/></svg>
       </a>
+      <a class="social" href="" id="foot-kofi" aria-label="Ko-fi">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-1.086 4.363.407 0 0 1.565-1.782 3.468-.963 1.904.82 1.832 3.011.723 4.311zm6.173.478c-.928.116-1.682.028-1.682.028V7.284h1.77s1.971.551 1.971 2.638c0 1.913-.985 2.667-2.059 3.015z"/></svg>
+      </a>
     </div>
   </div>
 </footer>
@@ -498,7 +501,8 @@ h1 .beam-text{
    ============================================================ */
 const CONFIG = {
   githubUser: "0mniDreamer",   // e.g. "Username" (no trailing slash)
-  twitchUser: "omnidreamer_"    // e.g. "Username" (no trailing slash)
+  twitchUser: "omnidreamer_",   // e.g. "Username" (no trailing slash)
+  kofiUser:   "0mnidreamer_"    // e.g. "Username" (no trailing slash)
 };
 
 /* ============================================================
@@ -636,10 +640,12 @@ const gh = CONFIG.githubUser;
 const tw = CONFIG.twitchUser;
 const ghBase = "https://github.com/" + gh;
 const twBase = "https://www.twitch.tv/" + tw;
+const koBase = "https://ko-fi.com/" + CONFIG.kofiUser;
 
 // wire up the fixed links
 [["nav-github",ghBase],["foot-github",ghBase],
- ["nav-twitch",twBase],["foot-twitch",twBase],["hero-twitch",twBase]]
+ ["nav-twitch",twBase],["foot-twitch",twBase],["hero-twitch",twBase],
+ ["foot-kofi",koBase]]
   .forEach(([id,href])=>{const el=document.getElementById(id);if(el)el.href=href;});
 
 // resolve a link value: full URL passed through, "USER/..." → github.com/<user>/...
